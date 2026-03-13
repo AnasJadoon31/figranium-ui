@@ -1,29 +1,30 @@
-import React from 'react';
-import { motion } from 'motion/react';
-import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
+import React from "react";
+import { motion } from "motion/react";
+import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
+import { SectionSurface } from "./SectionSurface";
 
 const useCases = [
   {
-    title: 'Lead Generation',
-    desc: 'Extract structured contacts from directories and LinkedIn.',
+    title: "Lead Generation",
+    desc: "Extract structured contacts from directories and LinkedIn.",
   },
   {
-    title: 'Price Monitoring',
-    desc: 'Track competitor pricing across multiple e-commerce sites.',
+    title: "Price Monitoring",
+    desc: "Track competitor pricing across multiple e-commerce sites.",
   },
   {
-    title: 'Automated Testing',
-    desc: 'Run end-to-end browser tests on your staging environments.',
+    title: "Automated Testing",
+    desc: "Run end-to-end browser tests on your staging environments.",
   },
   {
-    title: 'Data Entry',
-    desc: 'Move data between internal tools without an API.',
+    title: "Data Entry",
+    desc: "Move data between internal tools without an API.",
   },
 ];
 
 export function UseCases() {
   return (
-    <section className="py-32 px-6 max-w-5xl mx-auto relative z-10 border-t border-white/5">
+    <SectionSurface contentClassName="px-6 py-10 md:px-10 md:py-12">
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
         <div>
           <span className="text-zinc-500 font-medium tracking-[0.2em] mb-4 block text-xs uppercase">
@@ -33,11 +34,15 @@ export function UseCases() {
             Automate the web, <br /> your way.
           </h3>
           <p className="text-zinc-400 mb-8 leading-relaxed text-lg">
-            From simple scraping to complex multi-step workflows, Figranium handles it all locally.
+            From simple scraping to complex multi-step workflows, Figranium
+            handles it all locally.
           </p>
           <button className="text-white font-medium flex items-center gap-2 hover:text-zinc-300 transition-colors group">
             See all templates
-            <ArrowForwardIcon sx={{ fontSize: 16 }} className="group-hover:translate-x-1 transition-transform" />
+            <ArrowForwardIcon
+              sx={{ fontSize: 16 }}
+              className="group-hover:translate-x-1 transition-transform"
+            />
           </button>
         </div>
 
@@ -61,6 +66,6 @@ export function UseCases() {
           ))}
         </div>
       </div>
-    </section>
+    </SectionSurface>
   );
 }

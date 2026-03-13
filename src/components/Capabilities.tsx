@@ -6,6 +6,7 @@ import PlayCircleOutlineIcon from "@mui/icons-material/PlayCircleOutline";
 import CodeIcon from "@mui/icons-material/Code";
 import FileDownloadIcon from "@mui/icons-material/FileDownload";
 import LockIcon from "@mui/icons-material/Lock";
+import { SectionSurface } from "./SectionSurface";
 
 const capabilities = [
   {
@@ -48,8 +49,8 @@ const capabilities = [
 
 export function Capabilities() {
   return (
-    <section className="py-32 px-6 max-w-5xl mx-auto relative z-10">
-      <div className="mb-20">
+    <SectionSurface contentClassName="px-6 py-10 md:px-10 md:py-12">
+      <div className="mb-16">
         <span className="text-zinc-500 font-medium tracking-[0.2em] mb-4 block text-xs uppercase">
           CAPABILITIES
         </span>
@@ -88,6 +89,6 @@ export function Capabilities() {
           </motion.div>
         ))}
       </div>
-    </section>
+    </SectionSurface>
   );
 }

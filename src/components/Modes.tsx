@@ -3,6 +3,7 @@ import { motion } from "motion/react";
 import DownloadIcon from "@mui/icons-material/Download";
 import SmartToyIcon from "@mui/icons-material/SmartToy";
 import VisibilityIcon from "@mui/icons-material/Visibility";
+import { SectionSurface } from "./SectionSurface";
 
 const modes = [
   {
@@ -24,8 +25,8 @@ const modes = [
 
 export function Modes() {
   return (
-    <section className="py-32 px-6 max-w-5xl mx-auto relative z-10">
-      <div className="mb-20">
+    <SectionSurface contentClassName="px-6 py-10 md:px-10 md:py-12">
+      <div className="mb-16">
         <span className="text-zinc-500 font-medium tracking-[0.2em] mb-4 block text-xs uppercase">
           MODES
         </span>
@@ -62,6 +63,6 @@ export function Modes() {
           </motion.div>
         ))}
       </div>
-    </section>
+    </SectionSurface>
   );
 }

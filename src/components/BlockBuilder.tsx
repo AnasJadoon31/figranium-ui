@@ -6,6 +6,7 @@ import HourglassEmptyIcon from "@mui/icons-material/HourglassEmpty";
 import CodeIcon from "@mui/icons-material/Code";
 import AccountTreeIcon from "@mui/icons-material/AccountTree";
 import DragIndicatorIcon from "@mui/icons-material/DragIndicator";
+import { SectionSurface } from "./SectionSurface";
 
 const initialBlocks = [
   {
@@ -56,8 +57,8 @@ export function BlockBuilder() {
   const [blocks, setBlocks] = useState(initialBlocks);
 
   return (
-    <section className="py-32 px-6 max-w-5xl mx-auto relative z-10">
-      <div className="mb-20">
+    <SectionSurface contentClassName="px-6 py-10 md:px-10 md:py-12">
+      <div className="mb-16">
         <span className="text-zinc-500 font-medium tracking-[0.2em] mb-4 block text-xs uppercase">
           BLOCK-FIRST DESIGN
         </span>
@@ -107,6 +108,6 @@ export function BlockBuilder() {
           ))}
         </Reorder.Group>
       </div>
-    </section>
+    </SectionSurface>
   );
 }

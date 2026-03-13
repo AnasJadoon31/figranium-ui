@@ -2,6 +2,11 @@ import React, { useEffect, useRef, useState } from "react";
 import { HeroDemoTerminal, type HeroDemoLogEntry } from "./HeroDemoTerminal";
 import { WindowFrame } from "./WindowFrame";
 
+interface FigraniumHeroDemoProps {
+  className?: string;
+  bodyClassName?: string;
+}
+
 type HeroDemoTab = "editor" | "terminal";
 
 const taskJson = `{
@@ -83,7 +88,10 @@ function syntaxHighlight(json: string) {
   return colored;
 }
 
-export function FigraniumHeroDemo() {
+export function FigraniumHeroDemo({
+  className = "w-full max-w-4xl mx-auto mt-16 relative z-10 text-left",
+  bodyClassName = "relative h-80 w-full bg-[#0A0A0A] overflow-hidden",
+}: FigraniumHeroDemoProps) {
   const [activeTab, setActiveTab] = useState<HeroDemoTab>("editor");
   const [isRunning, setIsRunning] = useState(false);
   const [logs, setLogs] = useState<HeroDemoLogEntry[]>([]);
@@ -113,7 +121,7 @@ export function FigraniumHeroDemo() {
 
   return (
     <WindowFrame
-      className="w-full max-w-4xl mx-auto mt-16 relative z-10 text-left"
+      className={className}
       centerContent={
         <div className="flex items-center space-x-4">
           <button
@@ -143,7 +151,7 @@ export function FigraniumHeroDemo() {
           )}
         </button>
       }
-      bodyClassName="relative h-80 w-full bg-[#0A0A0A] overflow-hidden"
+      bodyClassName={bodyClassName}
     >
       {activeTab === "editor" ? (
         <div className="p-6 text-zinc-300 overflow-y-auto h-full w-full">
