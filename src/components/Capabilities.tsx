@@ -1,48 +1,48 @@
-import React from 'react';
-import { motion } from 'motion/react';
-import GridViewIcon from '@mui/icons-material/GridView';
-import LayersIcon from '@mui/icons-material/Layers';
-import PlayCircleOutlineIcon from '@mui/icons-material/PlayCircleOutline';
-import CodeIcon from '@mui/icons-material/Code';
-import FileDownloadIcon from '@mui/icons-material/FileDownload';
-import LockIcon from '@mui/icons-material/Lock';
+import React from "react";
+import { motion } from "motion/react";
+import GridViewIcon from "@mui/icons-material/GridView";
+import LayersIcon from "@mui/icons-material/Layers";
+import PlayCircleOutlineIcon from "@mui/icons-material/PlayCircleOutline";
+import CodeIcon from "@mui/icons-material/Code";
+import FileDownloadIcon from "@mui/icons-material/FileDownload";
+import LockIcon from "@mui/icons-material/Lock";
 
 const capabilities = [
   {
     icon: <GridViewIcon sx={{ fontSize: 20 }} />,
-    title: 'Block-Based Builder',
-    desc: 'Create tasks by stacking action blocks inside a visual editor.',
-    colSpan: 'md:col-span-2',
+    title: "Block-Based Builder",
+    desc: "Create tasks by stacking action blocks inside a visual editor.",
+    colSpan: "md:col-span-2",
   },
   {
     icon: <LayersIcon sx={{ fontSize: 20 }} />,
-    title: 'Execution Modes',
-    desc: 'Scrape, Agent, or Headful.',
-    colSpan: 'md:col-span-1',
+    title: "Execution Modes",
+    desc: "Scrape, Agent, or Headful.",
+    colSpan: "md:col-span-1",
   },
   {
     icon: <PlayCircleOutlineIcon sx={{ fontSize: 20 }} />,
-    title: 'Action Blocks',
-    desc: 'Click, type, hover, wait, scroll, press, and run JS.',
-    colSpan: 'md:col-span-1',
+    title: "Action Blocks",
+    desc: "Click, type, hover, wait, scroll, press, and run JS.",
+    colSpan: "md:col-span-1",
   },
   {
     icon: <CodeIcon sx={{ fontSize: 20 }} />,
-    title: 'JavaScript Blocks',
-    desc: 'Add custom extraction and page logic where you need it.',
-    colSpan: 'md:col-span-2',
+    title: "JavaScript Blocks",
+    desc: "Add custom extraction and page logic where you need it.",
+    colSpan: "md:col-span-2",
   },
   {
     icon: <FileDownloadIcon sx={{ fontSize: 20 }} />,
-    title: 'JSON Export',
-    desc: 'Copy task definitions from the editor for reuse.',
-    colSpan: 'md:col-span-1',
+    title: "JSON Export",
+    desc: "Copy task definitions from the editor for reuse.",
+    colSpan: "md:col-span-1",
   },
   {
     icon: <LockIcon sx={{ fontSize: 20 }} />,
-    title: 'Secure API Access',
-    desc: 'Trigger and manage tasks through a secure API.',
-    colSpan: 'md:col-span-2',
+    title: "Secure API Access",
+    desc: "Trigger and manage tasks through a secure API.",
+    colSpan: "md:col-span-2",
   },
 ];
 
@@ -57,7 +57,8 @@ export function Capabilities() {
           Build automation tasks locally, step by step.
         </h3>
         <p className="text-zinc-400 max-w-2xl leading-relaxed text-lg">
-          A block-based editor, multiple run modes, and exportable task definitions you can reuse.
+          A block-based editor, multiple run modes, and exportable task
+          definitions you can reuse.
         </p>
       </div>
 
@@ -71,7 +72,7 @@ export function Capabilities() {
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 0.5, delay: i * 0.1 }}
           >
-            <div className="bg-[#050505] border border-white/10 rounded-2xl h-full transition-colors duration-300 hover:bg-white/[0.02] hover:border-white/20 p-8 flex flex-col justify-between">
+            <div className="bg-[#050505] border border-white/10 rounded-2xl h-full transition-colors duration-300 hover:bg-[#0A0A0A] hover:border-white/20 p-8 flex flex-col justify-between">
               <div>
                 <div className="w-10 h-10 rounded-lg border border-white/10 flex items-center justify-center text-zinc-300 mb-6 bg-white/5">
                   {cap.icon}

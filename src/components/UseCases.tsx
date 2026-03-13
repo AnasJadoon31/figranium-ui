@@ -49,7 +49,7 @@ export function UseCases() {
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true, margin: "-100px" }}
               transition={{ duration: 0.4, delay: i * 0.1 }}
-              className="p-6 rounded-xl border-b border-white/5 hover:bg-white/[0.02] transition-colors group cursor-pointer"
+              className="p-6 rounded-xl border border-white/5 bg-[#050505] hover:bg-[#0A0A0A] transition-colors group cursor-pointer"
             >
               <h6 className="text-zinc-100 font-semibold mb-2 tracking-tight group-hover:text-white transition-colors">
                 {useCase.title}
