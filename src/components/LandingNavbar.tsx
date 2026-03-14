@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import StarIcon from "@mui/icons-material/Star";
 import GitHubIcon from "@mui/icons-material/GitHub";
 import { DiscordIcon } from "./DiscordIcon";
@@ -9,6 +9,18 @@ const navLinks = ["DOCS", "BLOG", "TEMPLATES", "RELEASES", "INTEGRATIONS"];
 export function LandingNavbar() {
   const navigate = useNavigate();
   const location = useLocation();
+  const [stars, setStars] = useState<number | null>(null);
+
+  useEffect(() => {
+    fetch("https://api.github.com/repos/figranium/figranium")
+      .then((res) => res.json())
+      .then((data) => {
+        if (typeof data.stargazers_count === "number") {
+          setStars(data.stargazers_count);
+        }
+      })
+      .catch((err) => console.error("Failed to fetch GitHub stars:", err));
+  }, []);
 
   function handleLogoClick() {
     if (location.pathname === "/") {
@@ -54,13 +66,17 @@ export function LandingNavbar() {
 
       <div className="flex items-center gap-4">
         <a
-          href="#"
+          href="https://discord.gg/kPmfbgu9Xn"
+          target="_blank"
+          rel="noopener noreferrer"
           className="text-zinc-400 hover:text-white transition-colors"
         >
           <DiscordIcon className="w-5 h-5" />
         </a>
         <a
-          href="#"
+          href="https://github.com/figranium/figranium"
+          target="_blank"
+          rel="noopener noreferrer"
           className="flex items-center gap-2 px-3 py-1.5 text-xs font-medium border border-zinc-800 bg-zinc-900/50 hover:bg-zinc-800 transition-colors rounded-md text-zinc-300"
         >
           <GitHubIcon sx={{ fontSize: 16 }} />
@@ -68,7 +84,7 @@ export function LandingNavbar() {
           <span className="text-zinc-600">|</span>
           <StarIcon sx={{ fontSize: 16 }} />
           <span className="text-zinc-600">|</span>
-          <span>405</span>
+          <span>{stars !== null ? stars : "405"}</span>
         </a>
       </div>
     </nav>

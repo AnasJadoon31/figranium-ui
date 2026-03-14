@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import releasesData from "@/data/releases.json";
@@ -20,6 +20,9 @@ interface Release {
 const releases: Release[] = releasesData as Release[];
 
 export default function Releases() {
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage, setItemsPerPage] = useState(5);
+
   if (!releases || releases.length === 0) {
     return (
       <div className="flex flex-col justify-center items-center min-h-screen bg-black text-white px-4">
@@ -30,7 +33,14 @@ export default function Releases() {
   }
 
   const latestRelease = releases[0];
-  const previousReleases = releases.slice(1);
+  const allPreviousReleases = releases.slice(1);
+  const totalPages = Math.ceil(allPreviousReleases.length / itemsPerPage);
+
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const previousReleases = allPreviousReleases.slice(
+    startIndex,
+    startIndex + itemsPerPage,
+  );
 
   // Helper date formatter
   const formatDate = (dateString: string) => {
@@ -135,11 +145,31 @@ export default function Releases() {
           </SectionSurface>
 
           {/* Previous Releases List */}
-          {previousReleases.length > 0 && (
+          {allPreviousReleases.length > 0 && (
             <section>
-              <h3 className="text-xl font-bold text-white mb-6">
-                Previous Releases
-              </h3>
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
+                <h3 className="text-xl font-bold text-white">
+                  Previous Releases
+                </h3>
+                <div className="flex items-center gap-2 text-sm text-neutral-400">
+                  <span>Showing</span>
+                  <select
+                    value={itemsPerPage}
+                    onChange={(e) => {
+                      setItemsPerPage(Number(e.target.value));
+                      setCurrentPage(1);
+                    }}
+                    className="bg-neutral-900 border border-neutral-800 text-neutral-200 rounded px-2 py-1 outline-none focus:border-emerald-500 transition-colors"
+                  >
+                    {[5, 10, 20, 50, 100].map((option) => (
+                      <option key={option} value={option}>
+                        {option}
+                      </option>
+                    ))}
+                  </select>
+                  <span>out of {allPreviousReleases.length}</span>
+                </div>
+              </div>
 
               <div className="space-y-4">
                 {previousReleases.map((release) => (
@@ -187,6 +217,56 @@ export default function Releases() {
                   </a>
                 ))}
               </div>
+
+              {totalPages > 1 && (
+                <div className="mt-8 flex justify-center items-center gap-4">
+                  <button
+                    onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
+                    disabled={currentPage === 1}
+                    className="p-2 rounded-lg bg-neutral-900 border border-neutral-800 text-neutral-300 disabled:opacity-50 hover:bg-neutral-800 transition-colors flex items-center justify-center"
+                    aria-label="Previous page"
+                  >
+                    <svg
+                      className="w-5 h-5"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M15 19l-7-7 7-7"
+                      />
+                    </svg>
+                  </button>
+                  <span className="text-neutral-400 text-sm">
+                    Page {currentPage} of {totalPages}
+                  </span>
+                  <button
+                    onClick={() =>
+                      setCurrentPage((p) => Math.min(totalPages, p + 1))
+                    }
+                    disabled={currentPage === totalPages}
+                    className="p-2 rounded-lg bg-neutral-900 border border-neutral-800 text-neutral-300 disabled:opacity-50 hover:bg-neutral-800 transition-colors flex items-center justify-center"
+                    aria-label="Next page"
+                  >
+                    <svg
+                      className="w-5 h-5"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M9 5l7 7-7 7"
+                      />
+                    </svg>
+                  </button>
+                </div>
+              )}
 
               <div className="mt-12 text-center">
                 <a
