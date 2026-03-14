@@ -1,0 +1,272 @@
+[
+  {
+    "id": 296495515,
+    "version": "V0.9.5",
+    "title": "v0.9.5",
+    "body": "### Security\r\n* Fix Code Injection in Extraction Worker \r\n* Fix Path Traversal in runId for Captures \r\n\r\n### Performance\r\n* Optimize template resolution and action loop in agent\r\n* Optimize cookie matching performance \r\n* Bulk Insert Optimization for Storage Functions \r\n\r\n### UI & Layout\r\n* Add action summary to collapsed ActionItem\r\n* Improve UI accessibility and consistency \r\n\r\n### Other\r\n* Add default selector finder preference in settings\r\n\r\n**Full Changelog**: https://github.com/figranium/figranium/compare/v0.9.4...V0.9.5",
+    "publishedAt": "2026-03-13T03:02:32Z",
+    "authorName": "asernasr",
+    "releaseUrl": "https://github.com/figranium/figranium/releases/tag/V0.9.5"
+  },
+  {
+    "id": 295430796,
+    "version": "v0.9.4",
+    "title": "v0.9.4",
+    "body": "### Features & Improvements\r\n* **Headful Browser & UI Adjustments**: \r\n  * Fixed an issue where the selector finder native browser failed to open. Added a disclaimer specifically for Wayland display users.\r\n  * Added keep-alive heartbeats to SSE streams to prevent proxy timeouts, implemented standard `/api/headful/selector_stream` routes, and included Caddy proxy recommendations.\r\n* **Authentication & Session Handoff**: \r\n  * Enhanced cookie persistence and session handoff between \"Run Task\" and \"Pick Selection in Browser\".\r\n  * Integrated proactive cookie injection to reliably support cross-domain SSO logins without losing authentication state.\r\n  * Unified browser context state saving for both successful and failed execution paths.\r\n* **Storage & Performance Optimization**: \r\n  * Implemented robust in-memory caching and async I/O for the storage layer, minimizing filesystem reads and dropping `loadUsers` execution to ~0.001ms when cached.\r\n  * Added 5s TTL in-memory caching specifically for Gemini, OpenAI, and Claude API keys, boosting retrieval speeds by ~32x during concurrent calls.\r\n* **Browser Automation Accuracy**: \r\n  * Resolved a regression in calendar field filling. The system now reliably uses Playwright's native `page.fill()` specifically for specialized input masks (like date, time, and color).\r\n* **Editor Accessibility**: \r\n  * Improved keyboard navigation and screen reader accessibility in the visual editor palette by adding explicit `aria-label` tags to icon-only buttons and visible focus rings.\r\n\r\n### Security Fixes\r\n* **Local SSRF Protection**: Improved IPv6 edge case handling within `isPrivateIP` and `validateUrl`. The application now securely blocks expanded, IPv4-mapped, and hex-encoded IPv6 addresses to prevent internal network scanning.\r\n* **Authentication Bypass Fix**: Closed a critical gap where development environments (`NODE_ENV != production`) bypassed settings authentication.\r\n\r\n\r\n**Full Changelog**: https://github.com/figranium/figranium/compare/v0.9.3...v0.9.4",
+    "publishedAt": "2026-03-11T00:59:05Z",
+    "authorName": "asernasr",
+    "releaseUrl": "https://github.com/figranium/figranium/releases/tag/v0.9.4"
+  },
+  {
+    "id": 294494280,
+    "version": "v0.9.3",
+    "title": "v0.9.3",
+    "body": "This update introduces significant enhancements to the **Canvas View** workflow, improves the reliability of the **Selector Finder**, and adds a new **Highlight Tool** for better visibility during headful automation.\r\n\r\n---\r\n\r\n### Canvas & UI Enhancements\r\n* **Drag-and-Drop Reordering:** You can now reorder action blocks directly within the canvas view for more intuitive workflow organization.\r\n* **Bulk Context Menu:** Added support to **disable, delete, or duplicate** all selected blocks simultaneously via a new context menu.\r\n* **ActionItem Badges:** Added selector option badges below the selector input in `ActionItem` for clearer identification of selector types.\r\n* **UX Fix:** Prevented the selection box from accidentally activating while a block is being dragged.\r\n\r\n### Selector Finder & Highlight Tool\r\n* **Top 5 Highlight Tool:** A new tool in headful mode that identifies and highlights the top 5 suggested selectors to help you visualize targets.\r\n* **Smart Prioritization:** The finder now prioritizes `name`, `placeholder`, and `has-text` attributes to generate more resilient and readable selectors.\r\n* **Task Continuity:** Fixed an issue where the selector finder would lose progress; it now correctly picks up where it left off by passing the `targetActionId`.\r\n\r\n### Stability & Logic Fixes\r\n* **SPA Transition Buffer:** Improved handoff to headful mode by adding a buffer that waits for `networkidle` plus a strategic timeout, ensuring Single Page Applications (SPAs) are fully loaded.\r\n* **SSE Stream Handler:** Resolved a stale closure bug in the Server-Sent Events (SSE) selector stream related to `activeInspectActionIdRef`.\r\n* **Agent Execution:** Fixed a bug where agent clicks would fail to execute when `randomizeClicks` was disabled.\r\n\r\n\r\n**Full Changelog**: https://github.com/figranium/figranium/compare/v0.9.2...v0.9.3",
+    "publishedAt": "2026-03-09T01:03:27Z",
+    "authorName": "asernasr",
+    "releaseUrl": "https://github.com/figranium/figranium/releases/tag/v0.9.3"
+  },
+  {
+    "id": 294137723,
+    "version": "v0.9.2",
+    "title": "v0.9.2",
+    "body": "## New Features\r\n- **API Keys Configuration:** Added support for inputting OpenAI and Claude API keys within the editor.\r\n\r\n## UI/UX Improvements\r\n- **Dashboard Redesign:** Fully overhauled the Dashboard screen to match the sleek, dark aesthetic of the new infinite canvas. Task cards now feature solid dark blocks with thin white borders, and primary/secondary buttons have been updated for consistency with the overall platform design.\r\n- **Empty State Upgrade:** The Dashboard's \"No Tasks Found\" placeholder has been redesigned into a bold, dashed \"Create First Task\" button, visually mirroring the \"Add Action\" block in the editor.\r\n- **Action Palette Overhaul:** Redesigned the \"Add Action\" pop-up menu into a visually appealing 2-column grid. Actions are now displayed as taller, descriptive half-width cards with their designated Material Icons prominently featured at the top.\r\n- **Icon Consistency:** Mapped and standardized Material Icons across the entire `ACTION_CATALOG` to ensure they match identically to what is displayed on the canvas execution nodes.\r\n\r\n## Bug Fixes\r\n- **Selection Box Z-Index:** Resolved a visual bug where the blue selection box (click-and-drag area) on the editor canvas would inappropriately render on top of higher-level UI elements like the shelf, sidebar, and header.\r\n\r\n## Privacy & Security\r\n- **Telemetry Removed:** Completely stripped out external telemetry logging from the backend authentication API. The backend will no longer ping external metrics servers during the user `/setup` or `/login` routes, improving local privacy. The session generation and saving mechanisms remain securely intact.\r\n\r\n**Full Changelog**: https://github.com/figranium/figranium/compare/v0.9.1...v0.9.2",
+    "publishedAt": "2026-03-06T23:23:41Z",
+    "authorName": "asernasr",
+    "releaseUrl": "https://github.com/figranium/figranium/releases/tag/v0.9.2"
+  },
+  {
+    "id": 294105601,
+    "version": "v0.9.1",
+    "title": "v0.9.1",
+    "body": "### New Features\r\n- **Further Rebranding**: Rebranded the CLI and binaries to Figranium.\r\n  - Updated codebase references, package names, and binary names.\r\n  - Refreshed documentation with new installation instructions.\r\n- **Standalone CLI Support**: Added direct support for running in `scrape`, `agent`, and `headful` modes via the command line.\r\n- **Auto-Publishing**: Integrated GitHub Actions for automated NPM package deployment.\r\n\r\n### UI & UX Enhancements\r\n- **Editor Visibility**: Boosted the contrast of grid dots on the canvas for a clearer editing experience.\r\n- **Header Cleanup**: Removed redundant page helper labels to declutter the workspace.\r\n- **Optimized View**: The browser viewer disclaimer is now automatically hidden when the view is optimized.\r\n\r\n### Package Optimizations\r\n- **Reduced Install Size**: Drastically reduced the NPM package size by excluding local `captures` and `screenshots`.\r\n\r\n\r\n**Full Changelog**: https://github.com/figranium/figranium/compare/v0.9.0...v0.9.1",
+    "publishedAt": "2026-03-06T21:27:54Z",
+    "authorName": "asernasr",
+    "releaseUrl": "https://github.com/figranium/figranium/releases/tag/v0.9.1"
+  },
+  {
+    "id": 293746495,
+    "version": "v0.9.0",
+    "title": "v0.9.0",
+    "body": "This version represents a major milestone, transforming the editor into a high-performance **Infinite Canvas** and rebranding the entire ecosystem to **Figranium**.\r\n\r\n## New Brand Identity: Figranium\r\n- **Full Rebrand**: Transitioned all logos, icons, and text references from Doppelganger to **Figranium**.\r\n- **Deterministic Control**: Updated the tagline to reflect our core focus on reliability: *\"Deterministic Control for an Agentic World\"*.\r\n- **Premium Auth Screen**: Enhanced the login experience with new branding and an ultra-clean layout.\r\n\r\n## Editor v2: Infinite Canvas\r\n- **Pan & Zoom**: The editor now features a fully transformable canvas. \r\n    - **Middle-click** or **Space + Drag** to pan.\r\n    - **Scroll** (or Ctrl + Scroll) to zoom from 0.25x to 2.0x.\r\n- **Synchronized Dot Grid**: The background grid moves in perfect lock-step with your blocks, providing consistent spatial reference at any zoom level.\r\n- **Focused Scrape Mode**: In Scrape mode, the canvas automatically hides action nodes and connector lines, keeping the focus entirely on your core configuration.\r\n\r\n## Task Settings Cabinet\r\nConsolidated all advanced controls into a new, monochrome slide-out cabinet:\r\n- **Mode Switcher**: Easily toggle between `Agent` and `Scrape` modes.\r\n- **Variable Management**: A dedicated tab for adding and editing task variables.\r\n- **Behavior Config**: Manage runtime flags like Headless, Stateless, and Proxy rotation.\r\n- **Extraction Scripts**: A full-featured code editor for post-execution data processing.\r\n- **API Tab**: Documentation and examples for triggering tasks via REST API with dynamic variable overrides.\r\n- **Version History**: Restored full access to task history with rollback and preview capabilities.\r\n\r\n## Aesthetic & UI Refinements\r\n- **Docked Top Bar**: A new, full-width header with a centered, high-visibility task title.\r\n- **History Navigation**: The history icon now directly opens the **Version History** tab in the settings cabinet for seamless access.\r\n- **Dashboard Aesthetics**: Favicons in the dashboard are now rendered in **monochrome grayscale** at **full opacity**, transitioning to full color on hover for a sophisticated look.\r\n- **Clean Blocks**: Removed the circular borders from the \"On Execution\" (formerly Trigger) block for a more modern, minimal look.\r\n\r\n## Technical Fixes & Stability\r\n- **CLI Compatibility**: Maintained `doppelganger` binary names and `localStorage` keys for full backward compatibility—your existing tasks and settings remain intact.\r\n- **Lint & Build**: Resolved all TypeScript and lint warnings, ensuring a stable `0.9.0` build.\r\n- **Repository Migration**: Updated all links to point to the new **[figranium/figranium](https://github.com/figranium/figranium)** repository.\r\n\r\n\r\n**Full Changelog**: https://github.com/figranium/figranium/compare/v0.8.2...v0.9.0",
+    "publishedAt": "2026-03-06T00:46:26Z",
+    "authorName": "asernasr",
+    "releaseUrl": "https://github.com/figranium/figranium/releases/tag/v0.9.0"
+  },
+  {
+    "id": 292240652,
+    "version": "v0.8.2",
+    "title": "v0.8.2",
+    "body": "### Features\r\n- **`randomizeClicks` behavior option** — Added a new configurable option to toggle between random-point-in-element clicks and center-of-element clicks (off by default)\r\n- **Cursor glide on all mouse movements** — Cursor glide now applies to all mouse movements, including dead clicks and coordinate-based clicks, for more natural-looking automation\r\n\r\n### Performance\r\n- **Smoother cursor glide metrics** — Tuned cursor glide parameters for smoother speed and step-size distributions, reducing unexpected jumps\r\n- **Memoize CaptureCard** — Memoized CaptureCard component to prevent unnecessary re-renders in react-window lists\r\n\r\n### Refactors\r\n- **Simplified click retry logic** — Streamlined click retry to a single attempt with a Playwright fallback, removing redundant retry loops\r\n\r\n\r\n**Full Changelog**: https://github.com/mnemosynestack/doppelganger/compare/v0.8.1...v0.8.2",
+    "publishedAt": "2026-03-02T20:35:22Z",
+    "authorName": "asernasr",
+    "releaseUrl": "https://github.com/figranium/figranium/releases/tag/v0.8.2"
+  },
+  {
+    "id": 291736806,
+    "version": "v0.8.0",
+    "title": "v0.8.0",
+    "body": "### New Features\r\n* **AI Selector Generator**: Added a magic dust icon next to selector inputs across all action types (click, type, hover, wait). Clicking it opens a small popup where you can describe an element in plain English (e.g., \"the green submit button\"), and the backend will automatically analyze the DOM using Gemini to generate the CSS selector for you.\r\n* **Smart Locational Interactions**: Rewrote the Playwright interaction engine to stop defaulting to clicking dead-center on elements. Clicks and hovers will now target random coordinates strictly within a padded boundary (minimum 2px pad, generally targeting the inner 60%) to perfectly mimic human variability without ever missing the button.\r\n* **Contextual Cookie Rendering**: Added a feature to render only the cookies relevant to the specific page being viewed, improving privacy and reducing clutter.\r\n* **Multiple API Keys Support**: The Doppelganger backend and frontend settings now fully support managing arrays of API Keys for LLM providers (e.g., Gemini) to handle rate-limiting and scale.\r\n\r\n### UI/UX Enhancements\r\n* **Action Block Overhaul**: The AI Selector generator now fully respects its parent block's state (disabling itself when the action is disabled) and properly elevates its z-index so your prompt text floats over any subsequent action blocks.\r\n* **Editor Flow Stability**: Re-arranged the execution flow buttons so the Stop button appears immediately next to the Run button. The Open Browser button now properly disables and grays out while a task is running.\r\n* **Headful Browser Disclaimer**: Added a prominent amber warning disclaimer when using the viewport-based headful viewer explaining that native windows are less stable than the recommended Docker (noVNC) container approach.\r\n* **Clean Session Cleanup**: Headful sessions are now strictly managed and will automatically cleanly terminate if you navigate away from the Task Editor.\r\n\r\n### Reliability & Fixes\r\n* **Strict Selector Rules**: The AI selector generation prompt has been enhanced with aggressive constraints forbidding randomized, dynamic, or numeric IDs (e.g., #popup-170970) and hash-based CSS classes. It will now properly prioritize semantic text matching and structurally resilient pseudo-classes.\r\n* **Playwright Explicit Scopes**: Fixed an esoteric bug where text fields wouldn't receive inputs by forcing the agent to scroll elements into view, click them locationally, clear them with keyboard shortcuts, and type unconditionally on focus.",
+    "publishedAt": "2026-03-01T03:55:54Z",
+    "authorName": "asernasr",
+    "releaseUrl": "https://github.com/figranium/figranium/releases/tag/v0.8.0"
+  },
+  {
+    "id": 291154736,
+    "version": "v0.7.3",
+    "title": "v0.7.3",
+    "body": "## Features\r\n- **Task Management**: Added task undo/redo support. Undocumented specific endpoints to streamline the API.\r\n- **Action Palette**: Introduced the `Ctrl+K` keyboard shortcut to quickly access the Action Palette.\r\n- **Security & Configuration**: Auto-generate `SESSION_SECRET` securely using OpenSSL, falling back to Node's `crypto` module if necessary.\r\n\r\n## Security Fixes\r\n- **SSRF Prevention**: Blocked the CGNAT IP range (`100.64.0.0/10`) to mitigate Server-Side Request Forgery vulnerabilities.\r\n\r\n## Performance Improvements\r\n- **Editor Optimization**: Memoized `availableTasks` and stabilized the `onSave` callback to improve editor performance.\r\n\r\n## Bug Fixes\r\n- **Dependencies**: Reverted an erroneous cookie version bump in `package-lock.json`.\r\n\r\n## Documentation\r\n- **Licensing**: Aligned the Terms of Service with the GPLv3 license.\r\n\r\n\r\n**Full Changelog**: https://github.com/mnemosynestack/doppelganger/compare/v0.7.2...v0.7.3",
+    "publishedAt": "2026-02-26T23:52:27Z",
+    "authorName": "asernasr",
+    "releaseUrl": "https://github.com/figranium/figranium/releases/tag/v0.7.3"
+  },
+  {
+    "id": 290656573,
+    "version": "v0.7.2",
+    "title": "Release 0.7.2",
+    "body": "## 1. Rotating Proxy Pool Configuration\r\nAdded support for designating proxies as part of a \"Rotating Pool\" and specifying their estimated size.\r\n\r\n**Backend Changes**\r\n* Updated proxy normalization to parse and store `isRotatingPool` (boolean) and `estimatedPoolSize` (integer).\r\n* Modified the proxy creation and update API routes to extract these new properties from your requests and pass them to the core proxy management functions.\r\n\r\n**Frontend Changes**\r\n* Updated proxy interfaces and forwarded the new properties downward.\r\n* Added form fields for toggling \"Rotating pool\" and specifying \"Estimated size\". Added \"Pool (~size)\" indicator badges to the list display.\r\n\r\n## 2. Proxy Multi-Selection & Bulk Deletion\r\nAdded the ability to select multiple proxies via checkboxes and bulk-delete them.\r\n\r\n**Backend Changes**\r\n* Implemented a batch deletion function which filters out an array of proxy IDs from your storage configuration.\r\n* Added a new bulk delete API endpoint that accepts an array of IDs and utilizes the new batch deletion function.\r\n\r\n**Frontend Changes**\r\n* Implemented a bulk delete handler connected to the new bulk deletion API.\r\n* Added state and logic to manage selected proxy IDs.\r\n* Implemented checkboxes and a \"Select All\" feature.\r\n* Added **Shift-Click** capabilities to select continuous ranges of proxies.\r\n* Changed the placeholder for the \"Host IP\" proxy into a permanent computer icon without a background circle since it cannot be deleted.\r\n* Added a conditionally rendering \"Delete Selected\" confirmation button.\r\n\r\n## 3. Build Warning Fixes\r\n* Raised the chunk size warning limit to suppress Vite warnings about minimum chunk sizes since the core index file slightly eclipsed the default limit.\r\n\r\n## 4. Minor Fixes\r\n* Handled a Reference Error that occurred during proxy creation and import because the password variable accidentally got dropped during a refactoring step.\r\n*  Palette: Use reusable CopyButton in API Key settings \r\n*  Bolt: Optimize CapturesPanel rendering\r\n* Sentinel: Fix API Key Auth DoS Vulnerability \r\n\r\n\r\n**Full Changelog**: https://github.com/mnemosynestack/doppelganger/compare/v0.7.1...v0.7.2",
+    "publishedAt": "2026-02-26T00:48:33Z",
+    "authorName": "asernasr",
+    "releaseUrl": "https://github.com/figranium/figranium/releases/tag/v0.7.2"
+  },
+  {
+    "id": 289997644,
+    "version": "v0.7.1",
+    "title": "Release 0.7.1",
+    "body": "Re-implemented the missing task execution API endpoints that were present in v0.5.8.\r\nThe new implementation in server.js (executeTaskById) handles:\r\n\r\n* Loading the task by ID.\r\n* Merging client-provided variables with stored task variables.\r\n* Delegating execution to handleAgent, handleScrape, or handleHeadful based on task mode.\r\n* Logging execution via registerExecution.\r\nAuthentication via x-api-key.\r\n\r\n**Full Changelog**: https://github.com/mnemosynestack/doppelganger/compare/v0.7...v0.7.1",
+    "publishedAt": "2026-02-24T18:17:50Z",
+    "authorName": "asernasr",
+    "releaseUrl": "https://github.com/figranium/figranium/releases/tag/v0.7.1"
+  },
+  {
+    "id": 289626379,
+    "version": "v0.7",
+    "title": "Release 0.7",
+    "body": "## Features & Improvements\r\n* **Task Export Selection**: The \"Export Tasks\" button on the dashboard now opens a sleek modal that allows you to individually select the specific tasks you wish to export, rather than exporting all tasks indiscriminately.\r\n* **File Downloads Support**: Added end-to-end support for agents to download files during task execution! A new `Wait for Downloads` action is available, and an interactive \"Downloads\" tab was added to the Results Pane to view or save captured files (along with ZIP bundling for multiple files).\r\n* **PostgreSQL Database Support**: Users can now seamlessly configure Doppelganger to run on a cloud PostgreSQL database by supplying the required environment variables. It falls back safely to disk storage if not configured.\r\n* **Captures UI Enhancements**: Added an interactive loading state and icon to the Captures screen refresh button, providing better visual feedback during network requests.\r\n\r\n## Other Changes\r\n* Bump hono from 4.11.9 to 4.12.1 \r\n*  Sentinel: [HIGH] Fix environment variable leak in extraction worker \r\n*  Palette: Add loading state and icon to Captures refresh button\r\n*  Bolt: EditorScreen Performance Optimization\r\n\r\n**Full Changelog**: https://github.com/mnemosynestack/doppelganger/compare/v0.6.7...v0.7",
+    "publishedAt": "2026-02-23T22:42:50Z",
+    "authorName": "asernasr",
+    "releaseUrl": "https://github.com/figranium/figranium/releases/tag/v0.7"
+  },
+  {
+    "id": 289201634,
+    "version": "v0.6.7",
+    "title": "Release 0.6.7",
+    "body": "### Changes\r\n* Added Material Icons in the **editor screen**, **settings**, and **dashboard**.\r\n* General UI improvements across various screens.\r\n\r\n**Full Changelog**: https://github.com/mnemosynestack/doppelganger/compare/v0.6.6...v0.6.7",
+    "publishedAt": "2026-02-22T22:15:19Z",
+    "authorName": "asernasr",
+    "releaseUrl": "https://github.com/figranium/figranium/releases/tag/v0.6.7"
+  },
+  {
+    "id": 289197015,
+    "version": "v0.6.6",
+    "title": "Release 0.6.6",
+    "body": "This release contains **critical security patches** and performance improvements. We strongly recommend all users update to this version immediately to ensure the integrity of their deployments.\r\n\r\n## Critical Security Patches\r\n* **SSRF Mitigation:** Implemented strict validation to block the `0.0.0.0/8` IP range, preventing potential SSRF (Server-Side Request Forgery) bypasses.\r\n* **Secure API Key Loading:** Hardened the API key loading process to prevent leakage and ensure secure initialization across all services.\r\n\r\n## Performance & Stability\r\n* **Disk I/O Optimization:** Introduced a caching layer for `loadTasks` to reduce redundant disk operations and improve system responsiveness.\r\n* **Execution Logging:** Refined logging mechanisms to reduce overhead while maintaining auditability.\r\n* **Code Integrity:** Removed unused server-side mutexes and synchronized internal branches to ensure a stable production environment.\r\n\r\n## Workflow & UI Enhancements\r\n* **UX Feedback:** Added visual loading indicators and ARIA busy states to authentication and API key actions to prevent duplicate submissions and improve accessibility.\r\n\r\n\r\n**Full Changelog**: https://github.com/mnemosynestack/doppelganger/compare/v0.6.5...v0.6.6",
+    "publishedAt": "2026-02-22T21:36:31Z",
+    "authorName": "asernasr",
+    "releaseUrl": "https://github.com/figranium/figranium/releases/tag/v0.6.6"
+  },
+  {
+    "id": 289047299,
+    "version": "v0.6.5",
+    "title": "Release 0.6.5",
+    "body": "**New Features**\r\n* **Wait for Selector Block:** Added a new block that allows the automation to wait for a specific CSS selector to appear before proceeding.\r\n* **Clipboard Utility:** Introduced a new `copy to clipboard` utility and component to facilitate copying text during automation or user interaction.\r\n\r\n**UI/UX Improvements**\r\n* **Auth Loading State:** Added a loading spinner to the authentication action button to improve user feedback during login/signup processes.\r\n\r\n\r\n**Full Changelog**: https://github.com/mnemosynestack/doppelganger/compare/v0.6.4...v0.6.5",
+    "publishedAt": "2026-02-21T21:24:40Z",
+    "authorName": "asernasr",
+    "releaseUrl": "https://github.com/figranium/figranium/releases/tag/v0.6.5"
+  },
+  {
+    "id": 288940309,
+    "version": "v0.6.4",
+    "title": "Release 0.6.4",
+    "body": "## **Security Enhancements**\r\n* **Hardened API Key Storage:** Upgraded hash strength using PBKDF2 for all stored API keys.\r\n* **Timing Attack Prevention:** Implemented double HMAC validation and fixed validation vulnerabilities to prevent side-channel attacks.\r\n* **Data Leak Protection:** Modified proxy ID generation to ensure sensitive credentials (API keys and passwords) are excluded from deterministic flows.\r\n\r\n## **Features & UI Updates**\r\n* **Workflow Automation:** Added a new `Navigate To` block to the task builder for better flow control.\r\n* **Template System:** Introduced support for the `{$html}` template variable and reserved the \"html\" variable name for agent-specific JavaScript use.\r\n\r\n## **Performance & Reliability**\r\n* **I/O Optimization:** Debounced execution logging to reduce disk I/O pressure and improve server responsiveness.\r\n* **Networking Stability:** Added a comprehensive test suite for IP normalization functions to ensure networking consistency.\r\n* **Code Maintenance:** Removed unused taskMutex imports in the server module.\r\n\r\n**Full Changelog**: https://github.com/mnemosynestack/doppelganger/compare/v0.6.3...v0.6.4",
+    "publishedAt": "2026-02-21T03:01:43Z",
+    "authorName": "asernasr",
+    "releaseUrl": "https://github.com/figranium/figranium/releases/tag/v0.6.4"
+  },
+  {
+    "id": 288349808,
+    "version": "v0.6.3",
+    "title": "Release 0.6.3",
+    "body": "### **New Features**\r\n* **Authentication Improvements:** Added a password visibility toggle to the AuthScreen and introduced a loading spinner on the primary authentication button for better user feedback.\r\n* **Action Palette Navigation:** Implemented keyboard navigation support for the ActionPalette UI component.\r\n* **Community Integration:** Added Discord links to the README and established an automated workflow for Discord release notifications.\r\n\r\n### **Performance & Optimizations**\r\n* **I/O Reduction:** Implemented caching for `loadApiKey` to reduce file I/O overhead.\r\n* **Rendering Efficiency:** Optimized CapturesPanel rendering within the Bolt interface.\r\n* **Data Handling:** Added in-memory caching for tasks and refactored the server-side logic to optimize execution list payload sizes.\r\n\r\n### **Bug Fixes**\r\n* **Task Management:** Fixed task imports to correctly support single objects and ensure version preservation.\r\n* **UI/UX Stability:**\r\n    * Resolved an issue where random tabs would open in headful mode.\r\n    * Fixed UI cropping and zooming issues in headful mode.\r\n    * Fixed a bug in the Save Version history refresh logic.\r\n* **Accessibility:** Improved input field accessibility within the task editor.\r\n\r\n### **Maintenance**\r\n* **Cleanup:** Removed Tally forms integration and deleted unnecessary project files and directories.\r\n\r\n\r\n**Full Changelog**: https://github.com/mnemosynestack/doppelganger/compare/v0.6.2...v0.6.3",
+    "publishedAt": "2026-02-19T18:03:42Z",
+    "authorName": "asernasr",
+    "releaseUrl": "https://github.com/figranium/figranium/releases/tag/v0.6.3"
+  },
+  {
+    "id": 286961672,
+    "version": "v0.6.2",
+    "title": "Release 0.6.2",
+    "body": "- **Add 'save version' button** `23bf096`\r\n  - Reintroduces manual save button to create specific versions\r\n  - Distinguishes between autosaves and manual checkpoints\r\n- Optimize Execution List Payload\r\n\r\n**Full Changelog**: https://github.com/mnemosynestack/doppelganger/compare/v0.6.1...v0.6.2",
+    "publishedAt": "2026-02-16T18:32:55Z",
+    "authorName": "asernasr",
+    "releaseUrl": "https://github.com/figranium/figranium/releases/tag/v0.6.2"
+  },
+  {
+    "id": 286424426,
+    "version": "v0.6.1",
+    "title": "Release 0.6.1",
+    "body": "## Features\r\n- **Autosave Implementation**: Tasks now automatically save changes to disk to prevent data loss.\r\n- **Explicit Version History**: Task versions are now only created when manually clicking the \"Save Version\" button, reducing history clutter while ensuring work is safe.\r\n- **Save Button Location**: The \"Save Version\" button is now located to the right of the History icon for easy access.\r\n\r\n## Improvements\r\n- **UI Responsiveness**: Modifications to task structure and variables are saved immediately. Text inputs are saved on blur.\r\n- **Data Persistence**: Separated disk persistence from versioning history.\r\n\r\n## Fixes\r\n- **TypeScript**: Resolved `onSave` prop type mismatch in [EditorLoader](cci:1://file:///c:/dev/doppelganger/src/components/app/EditorLoader.tsx:31:0-96:2) and [App.tsx](cci:7://file:///c:/dev/doppelganger/src/App.tsx:0:0-0:0).\r\n- **Cleanup**: Removed unused `hasUnsavedChanges` state and prop drilling.\r\n\r\n## Technical Details\r\n- **Backend API**: Updated `POST /api/tasks` to accept `?version=true` query parameter for optional version creation.\r\n- **Frontend State**: Updated [useTasks](cci:1://file:///c:/dev/doppelganger/src/hooks/useTasks.ts:4:0-178:1) hook to support the `createVersion` flag.\r\n\r\n**Full Changelog**: https://github.com/mnemosynestack/doppelganger/compare/v0.6...v0.6.1",
+    "publishedAt": "2026-02-14T20:14:28Z",
+    "authorName": "asernasr",
+    "releaseUrl": "https://github.com/figranium/figranium/releases/tag/v0.6.1"
+  },
+  {
+    "id": 285645772,
+    "version": "v0.6",
+    "title": "Release 0.6",
+    "body": "This release includes improvements, bug fixes, and performance optimizations since version `v0.5.8`.\r\n\r\n## 🚀 Key Features & Improvements\r\n- **Native ARM Support**: Added native support for ARM devices, including documented installation methods.\r\n- **Modular Architecture**: Portions of the codebase (Server, Agent, Utility logic) have been refactored into modular components for better maintainability.\r\n- **Enhanced Dashboard**: Improved empty states, accessibility, and fixed rendering issues for task cards and listing screens.\r\n- **Security Enhancements**: Mitigated SSRF vulnerabilities and improved IP range validation.\r\n\r\n## 🛠 Bug Fixes\r\n- Fixed major task loading race conditions and persistence bugs on the dashboard.\r\n- Resolved VPS-specific crashes related to IP allowance and stale X11 locks.\r\n- Fixed Docker stability issues by adding required fonts and using bundled Chromium for Linux environments.\r\n- Corrected variable substitution in scrape mode and script execution bugs.\r\n\r\n## ⚡ Performance Optimizations\r\n- **Asynchronous File I/O**: Converted `saveTasks` and several scraping operations from synchronous to asynchronous non-blocking writes.\r\n- **API Efficiency**: Optimized directory listing and file statistics in API endpoints.\r\n- **Rendering**: Optimized list rendering in Captures and Executions screens.\r\n\r\n## 🧹 Maintenance & Chores\r\n- **Documentation**: Enhanced `GEMINI.md` for AI agents.\r\n- **Testing**: Added unit tests for task versioning and improved coverage for network utilities.\r\n- **Clean up**: Removed unused imports, dead code, and leftover debug logs.\r\n- **Dependencies**: Updated [package.json](cci:7://file:///c:/dev/doppelganger/package.json:0:0-0:0) and external repository URLs.\r\n\r\n**Full Changelog**: https://github.com/mnemosynestack/doppelganger/compare/v0.5.8...v0.6",
+    "publishedAt": "2026-02-12T11:27:37Z",
+    "authorName": "asernasr",
+    "releaseUrl": "https://github.com/figranium/figranium/releases/tag/v0.6"
+  },
+  {
+    "id": 285033273,
+    "version": "v0.5.8",
+    "title": "Release 0.5.8",
+    "body": "## What's Changed\r\n* 🔒 Fix Server-Side Code Injection (RCE) in scrape.js by @mnemosyne-ai-legacy in https://github.com/asernasr/doppelganger/pull/40\r\n* fix: secure agent extraction script execution (RCE) by @mnemosyne-ai-legacy in https://github.com/asernasr/doppelganger/pull/38\r\n* ⚡ Async loadApiKey to prevent event loop blocking by @mnemosyne-ai-legacy in https://github.com/asernasr/doppelganger/pull/35\r\n* Refactor IP allowlist check to be non-blocking and cached by @mnemosyne-ai-legacy in https://github.com/asernasr/doppelganger/pull/34\r\n* 🧹 Refactor formatHTML to shared utility by @mnemosyne-ai-legacy in https://github.com/asernasr/doppelganger/pull/15\r\n* ⚡ Optimize task loading with async I/O by @mnemosyne-ai-legacy in https://github.com/asernasr/doppelganger/pull/39\r\n* 🎨 Palette: Improve AuthScreen accessibility and form semantics by @mnemosyne-ai-legacy in https://github.com/asernasr/doppelganger/pull/44\r\n* ⚡ Optimize CSV parsing in agent.js by @mnemosyne-ai-legacy in https://github.com/asernasr/doppelganger/pull/47\r\n* ⚡ Optimize blocking I/O in agent.js by @mnemosyne-ai-legacy in https://github.com/asernasr/doppelganger/pull/48\r\n* ⚡ Async I/O for User Agent Settings by @mnemosyne-ai-legacy in https://github.com/asernasr/doppelganger/pull/46\r\n* ⚡ Optimize file I/O in scrape.js to be non-blocking by @mnemosyne-ai-legacy in https://github.com/asernasr/doppelganger/pull/49\r\n* 🎨 Palette: Add accessible labels and focus styles to Sidebar by @mnemosyne-ai-legacy in https://github.com/asernasr/doppelganger/pull/53\r\n* 🎨 Palette: Improve accessibility of Editor action buttons by @mnemosyne-ai-legacy in https://github.com/asernasr/doppelganger/pull/51\r\n\r\n**Full Changelog**: https://github.com/asernasr/doppelganger/compare/v0.5.7...v0.5.8",
+    "publishedAt": "2026-02-10T22:39:23Z",
+    "authorName": "asernasr",
+    "releaseUrl": "https://github.com/figranium/figranium/releases/tag/v0.5.8"
+  },
+  {
+    "id": 282383651,
+    "version": "v0.5.7",
+    "title": "Release 0.5.7",
+    "body": "- **Recording controls now live** – Every task surfaces a “Disable automated recording” switch in the general settings panel, with the flag persisted through defaults, migrations, and the scrape/agent runners so Playwright skips video capture whenever operators require it.\r\n- **Stateless execution path** – Added a “Stateless execution” toggle (persisted on tasks and respected in imports/normalizations) plus updates to the scrape/agent/headful handlers so they only read/write `storage_state.json` when the flag is off, keeping cookies and local storage completely ephemeral when needed.\r\n\r\n**Full Changelog**: https://github.com/mnemosyne-artificial-intelligence/doppelganger/compare/v0.5.6...v0.5.7",
+    "publishedAt": "2026-02-03T02:20:11Z",
+    "authorName": "unknown",
+    "releaseUrl": "https://github.com/figranium/figranium/releases/tag/v0.5.7"
+  },
+  {
+    "id": 281342945,
+    "version": "v0.5.6",
+    "title": "Release 0.5.6",
+    "body": "## Release notes\r\n\r\n- Hardened the agent “start” block so it always calls `127.0.0.1:<port>` instead of trusting a potentially forged `Host` header, eliminating the SSRF vector when agents call `/tasks/:id/api`.\r\n- Added express-rate-limit on `/api/auth/login` and `/api/auth/setup` (default 10 attempts per 15 minutes, configurable via `AUTH_RATE_LIMIT_MAX`) plus inline guidance so brute-force attacks are now throttled.\r\n- Documented the intentional CodeQL “user input evaluation” and “weak crypto” findings, noted why they’re false positives, and kept SHA-1 limited to deterministic IDs.\r\n- Enabled secure session cookies in production (`SESSION_COOKIE_SECURE` / `NODE_ENV=production`) and explained the behavior for reviewers so auth sessions only travel over HTTPS.\r\n- Bump qs from 6.14.0 to 6.14.1 by @dependabot[bot] in https://github.com/mnemosyne-artificial-intelligence/doppelganger/pull/10\r\n- Bump react-router and react-router-dom by @dependabot[bot] in https://github.com/mnemosyne-artificial-intelligence/doppelganger/pull/11\r\n\r\nThis patch is highly recommended because it closes multiple security findings (SSRF, brute-force limits, secure cookies) and documents remaining CodeQL alerts for future audits.\r\n\r\n**Full Changelog**: https://github.com/mnemosyne-artificial-intelligence/doppelganger/compare/0.5.5...v0.5.6",
+    "publishedAt": "2026-01-30T02:10:50Z",
+    "authorName": "unknown",
+    "releaseUrl": "https://github.com/figranium/figranium/releases/tag/v0.5.6"
+  },
+  {
+    "id": 280904730,
+    "version": "0.5.5",
+    "title": "Release 0.5.5",
+    "body": "## Release Notes\r\n- expose `APP_VERSION` via `src/utils/appInfo.ts` for easy version display\r\n- add `VersionPanel` to the system tab so users can view/copy the running package version\r\n\r\n**Full Changelog**: https://github.com/mnemosyne-artificial-intelligence/doppelganger/compare/0.5.4...0.5.5",
+    "publishedAt": "2026-01-28T22:58:06Z",
+    "authorName": "unknown",
+    "releaseUrl": "https://github.com/figranium/figranium/releases/tag/0.5.5"
+  },
+  {
+    "id": 280073448,
+    "version": "0.5.4",
+    "title": "Release 0.5.4",
+    "body": "## Key updates\r\n- **Unsaved-task protection**: Editor now tracks the serialized task state, disables the “Save” button when nothing changed, and hooks `beforeunload` so closing the tab/window warns you if edits are pending. `App.tsx` now records the last-saved snapshot and exposes `hasUnsavedChanges` to the Editor loader/view.  \r\n- **Task loader bridges editor state**: `EditorLoader` now propagates `hasUnsavedChanges` and notifies the editor when it loads a task so the “Save” button state stays accurate.  \r\n- **Save flow tweaks**: Saving a task updates the snapshot/dirty flag immediately, and creating a new task resets the dirty indicator so the UI reflects the true save state.\r\n\r\nThese changes make task editing safer and clearer.\r\n\r\n**Full Changelog**: https://github.com/mnemosyne-artificial-intelligence/doppelganger/compare/0.5.3...0.5.4",
+    "publishedAt": "2026-01-26T21:11:28Z",
+    "authorName": "unknown",
+    "releaseUrl": "https://github.com/figranium/figranium/releases/tag/0.5.4"
+  },
+  {
+    "id": 280036491,
+    "version": "0.5.3",
+    "title": "Release 0.5.3",
+    "body": "### Highlights\r\n- Added `AGENTS.md` with agent guidance, license reminders, workflow tips, and compliance expectations for contributors.\r\n- Refreshed the README: kept the inline `demo-run.gif`, reordered the “Getting Started” sections (Docker before npm), and clarified Docker commands/notes.\r\n- Enhanced the editor:\r\n  * Type blocks now include a “Mode” dropdown (`replace` vs `append`) persisted on the action and honored during execution (agent.js now clears or appends before typing depending on the mode).\r\n  * Press blocks gained modifier checkboxes plus a dropdown of base keys (navigation, digits, letters, functions), building combos such as `Ctrl+Shift+A`.\r\n- Updated the type definition (`Action.typeMode`) and agent runtime to support the new typing modes.\r\n- Added `.github/workflows/npm-publish.yml` so pushing a `v*` tag now runs `npm ci`, builds the app, and publishes `@doppelgangerdev/doppelganger` via the `NPM_TOKEN` secret.\r\n\r\n**Full Changelog**: https://github.com/mnemosyne-artificial-intelligence/doppelganger/compare/v0.5.2...0.5.3",
+    "publishedAt": "2026-01-26T19:03:57Z",
+    "authorName": "unknown",
+    "releaseUrl": "https://github.com/figranium/figranium/releases/tag/0.5.3"
+  },
+  {
+    "id": 279812750,
+    "version": "v0.5.2",
+    "title": "Release 0.5.2",
+    "body": "## What’s New\r\n- Added `react-window` virtualization to the captures screen, settings panel, executions history, and capture modal so only the visible items render; scrolling stays snappy even with many entries.\r\n- Introduced a shared `CaptureCard` component plus exported `CaptureEntry` type so every list shares the same UI surface and typing.\r\n- Wired the captures delete/refresh flows and executions controls into the virtualized lists, keeping interactions (open/delete/filter) intact while offloading DOM churn.\r\n\r\n## Fixes\r\n- Ensured the UI no longer freezes when loading long capture/execution histories by limiting render scope to the viewport.\r\n- Added proper typings for `react-window` so the lists stay type-safe.\r\n\r\n**Full Changelog**: https://github.com/mnemosyne-artificial-intelligence/doppelganger/compare/v0.5.1...v0.5.2",
+    "publishedAt": "2026-01-26T04:17:51Z",
+    "authorName": "unknown",
+    "releaseUrl": "https://github.com/figranium/figranium/releases/tag/v0.5.2"
+  },
+  {
+    "id": 279174013,
+    "version": "v0.5.1",
+    "title": "Release 0.5.1",
+    "body": "## Highlights\r\n- Docker runtime aligned to Playwright 1.57 (Jammy) with more robust APT installs.\r\n- Recording reliability improved in Docker (handles cross-volume moves + explicit video sizing).\r\n- Dashboard scroll polish with a top fade overlay.\r\n- Clearer proxy rotation tooltip guidance.\r\n\r\n## Changes\r\n### Docker / Runtime\r\n- Update Playwright base image to `v1.57.0-jammy`.\r\n- Harden APT installs with retries/timeouts; keep VNC optional via `INSTALL_VNC`.\r\n- `.gitignore` updates for local artifacts and captures.\r\n\r\n### Recording Reliability\r\n- Add `--disable-dev-shm-usage` for Chromium in Docker.\r\n- Recordings now use explicit video size.\r\n- Move recordings across volumes safely by falling back to copy+unlink on `EXDEV`.\r\n\r\n### UI / UX\r\n- Dashboard task list gets a top fade for smoother scroll edge.\r\n- Rotate Proxies tooltip now points to Settings → Proxies.\r\n\r\n### Docs\r\n- Minor CONTRIBUTING branding tweak.\r\n\r\n**Full Changelog**: https://github.com/mnemosyne-artificial-intelligence/doppelganger/compare/v0.5...v0.5.1",
+    "publishedAt": "2026-01-22T21:43:51Z",
+    "authorName": "unknown",
+    "releaseUrl": "https://github.com/figranium/figranium/releases/tag/v0.5.1"
+  },
+  {
+    "id": 278838850,
+    "version": "v0.5",
+    "title": "Release 0.5 ",
+    "body": "## Highlights\r\n- **Captures & recordings**: Automatic full‑run screen recordings (webm) and unified captures flow for screenshots + recordings.\r\n- **Captures UI**: New **Captures** screen and results modal to browse captures; results panel links to current‑run captures.\r\n- **Proxy rotation controls**: Rotation mode (round‑robin vs random) configurable in Settings.\r\n- **User Agent settings**: Default UA selection in Settings with rotation preserved per task.\r\n\r\n## What’s New\r\n- **Captures directory + API**\r\n  - Captures stored in `public/captures`.\r\n  - New `/api/data/captures` endpoint for listing/deleting captures.\r\n- **Sidebar update**\r\n  - Dedicated **Captures** tab.\r\n  - Executions icon switched to History.\r\n- **Results UX**\r\n  - “View All Captures” button in results panel opens captures viewer.\r\n- **Agent action**\r\n  - New **Screenshot** action block for agent tasks.\r\n- **Viewport rotation toggle**\r\n  - Task‑level **Rotate Viewport** switch (off by default).\r\n- **Structured While block**\r\n  - While condition editor now uses structured fields (var/type/op/value), not raw JS.\r\n- **Scroll speed control**\r\n  - Scroll block has “Scroll Speed (ms)” input to control duration.\r\n\r\n## Behavior Changes\r\n- **Recording & screenshots** now include runId‑prefixed filenames for filtering per run.\r\n- **Proxy rotation** now honors a stored rotation mode (round‑robin default).\r\n- **User agent** selection applies when UA rotation is off.\r\n\r\n## Dev/Infra\r\n- New `user-agent-settings.js` module for UA config storage.\r\n- New UI panels/components: `CapturesScreen`, `CapturesPanel`, `UserAgentPanel`.\r\n\r\n**Full Changelog**: https://github.com/mnemosyne-artificial-intelligence/doppelganger/compare/v0.4.3...v0.5",
+    "publishedAt": "2026-01-22T02:13:44Z",
+    "authorName": "asernasr",
+    "releaseUrl": "https://github.com/figranium/figranium/releases/tag/v0.5"
+  },
+  {
+    "id": 278460578,
+    "version": "v0.4.3",
+    "title": "Release 0.4.3",
+    "body": "### Fixed\r\n- Start Task now calls the local server correctly (avoids wrong host/port).\r\n- Start Task now stores returned data in `{$block.output}` for downstream use.\r\n- Start Task dropdown correctly lists other tasks..\r\n\r\n**Full Changelog**: https://github.com/mnemosyne-artificial-intelligence/doppelganger/compare/v0.4.2...v0.4.3",
+    "publishedAt": "2026-01-20T23:19:22Z",
+    "authorName": "unknown",
+    "releaseUrl": "https://github.com/figranium/figranium/releases/tag/v0.4.3"
+  }
+]

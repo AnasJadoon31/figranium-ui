@@ -2,19 +2,22 @@ import React from "react";
 import StarIcon from "@mui/icons-material/Star";
 import GitHubIcon from "@mui/icons-material/GitHub";
 import { DiscordIcon } from "./DiscordIcon";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 
 const navLinks = ["DOCS", "BLOG", "TEMPLATES", "RELEASES", "INTEGRATIONS"];
 
-function handleLogoClick() {
-  if (window.location.pathname === "/") {
-    window.scrollTo({ top: 0, behavior: "smooth" });
-    return;
+export function LandingNavbar() {
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  function handleLogoClick() {
+    if (location.pathname === "/") {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+      return;
+    }
+    navigate("/");
   }
 
-  window.location.href = "/";
-}
-
-export function LandingNavbar() {
   return (
     <nav className="sticky top-0 z-50 flex items-center justify-between px-6 py-4 border-b border-white/5 bg-black/80 backdrop-blur-md">
       <button
@@ -25,11 +28,28 @@ export function LandingNavbar() {
       </button>
 
       <div className="hidden md:flex items-center gap-8 text-xs font-medium text-zinc-400">
-        {navLinks.map((link) => (
-          <a key={link} href="#" className="hover:text-white transition-colors">
-            {link}
-          </a>
-        ))}
+        {navLinks.map((link) => {
+          if (link === "RELEASES") {
+            return (
+              <Link
+                key={link}
+                to="/releases"
+                className="hover:text-white transition-colors"
+              >
+                {link}
+              </Link>
+            );
+          }
+          return (
+            <a
+              key={link}
+              href="#"
+              className="hover:text-white transition-colors"
+            >
+              {link}
+            </a>
+          );
+        })}
       </div>
 
       <div className="flex items-center gap-4">
