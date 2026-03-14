@@ -1,7 +1,6 @@
 import React from "react";
 import StarIcon from "@mui/icons-material/Star";
 import GitHubIcon from "@mui/icons-material/GitHub";
-import EmergencyIcon from "@mui/icons-material/Emergency";
 import { DiscordIcon } from "./DiscordIcon";
 
 const navLinks = ["DOCS", "BLOG", "TEMPLATES", "RELEASES", "INTEGRATIONS"];
@@ -22,10 +21,7 @@ export function LandingNavbar() {
         onClick={handleLogoClick}
         className="flex items-center gap-2 cursor-pointer hover:opacity-80 transition-opacity bg-transparent border-none p-0 m-0"
       >
-        <EmergencyIcon sx={{ fontSize: 20, color: "white" }} />
-        <span className="font-bold text-lg tracking-tight text-white">
-          figranium
-        </span>
+        <img src="/logo.svg" alt="figranium" className="h-16" />
       </button>
 
       <div className="hidden md:flex items-center gap-8 text-xs font-medium text-zinc-400">
