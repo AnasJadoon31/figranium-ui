@@ -1,12 +1,12 @@
 [
   {
-    "id": 296495515,
-    "version": "V0.9.5",
-    "title": "v0.9.5",
-    "body": "### Security\r\n* Fix Code Injection in Extraction Worker \r\n* Fix Path Traversal in runId for Captures \r\n\r\n### Performance\r\n* Optimize template resolution and action loop in agent\r\n* Optimize cookie matching performance \r\n* Bulk Insert Optimization for Storage Functions \r\n\r\n### UI & Layout\r\n* Add action summary to collapsed ActionItem\r\n* Improve UI accessibility and consistency \r\n\r\n### Other\r\n* Add default selector finder preference in settings\r\n\r\n**Full Changelog**: https://github.com/figranium/figranium/compare/v0.9.4...V0.9.5",
-    "publishedAt": "2026-03-13T03:02:32Z",
+    "id": 297050458,
+    "version": "v0.9.6",
+    "title": "v0.9.6",
+    "body": "This release introduces automated task scheduling, hardens server security, and optimizes agent performance for faster execution.\r\n\r\n## Major Features\r\n\r\n### Task Scheduling & Cron Triggers\r\nA built-in scheduler that allows for fully automated task execution without the need for external triggers.\r\n- **Visual Mode**: Easily configure periodic runs (every X minutes), hourly, daily, weekly, or monthly directly from the Task Editor.\r\n- **Advanced Mode**: Support for standard 5-field cron expressions for complex schedules.\r\n- **Persistence**: Schedules are stored within task metadata and automatically resume after server restarts.\r\n- **Monitoring**: Real-time status in the Task Editor showing \"Next Run,\" \"Last Run,\" and execution duration.\r\n- **API Support**: New `/api/schedules` endpoints for managing and monitoring automated jobs.\r\n\r\n## Security (Sentinel)\r\n\r\nHardening the platform against unauthorized access and common web vulnerabilities:\r\n- **Protected Captures**: Static assets in `/captures` and `/screenshots` now require a valid session or API key for access.\r\n- **Security Headers**: Implemented standard security headers including `X-Content-Type-Options`, `X-Frame-Options`, `X-XSS-Protection`, and `Referrer-Policy`.\r\n- **API Hardening**: Reduced the default JSON payload limit to `2mb` to prevent potential DoS attacks.\r\n- **Authentication**: Added `requireAuthOrApiKey` middleware to unify protection across UI and API access points.\r\n\r\n## Performance (Bolt)\r\n\r\nOptimizing the core automation engine for speed and resource efficiency:\r\n- **Conditional DOM Fetching**: The agent now conditionally fetches `outerHTML` only when explicitly referenced in `javascript` blocks or logic conditions. This significantly reduces data transfer and improves execution speed for most tasks.\r\n\r\n## Architectural Refactoring\r\n\r\n- **Modular Editor**: The monolithic `EditorScreen.tsx` has been refactored into a modular collection of components and custom hooks (under `src/components/editor/` and `src/hooks/`). This improves long-term maintainability, code readability, and developer velocity.\r\n\r\n## Documentation\r\n\r\n- **Updated AGENT_SPEC.md**: Added schedule schema definitions.\r\n- **Expanded README.md**: Detailed instructions for the new scheduling UI and API.\r\n- **Enhanced SKILL.md**: Comprehensive documentation for the Scheduling API for external integrations.\r\n\r\n\r\n**Full Changelog**: https://github.com/figranium/figranium/compare/v0.9.4...v0.9.6",
+    "publishedAt": "2026-03-14T19:08:12Z",
     "authorName": "asernasr",
-    "releaseUrl": "https://github.com/figranium/figranium/releases/tag/V0.9.5"
+    "releaseUrl": "https://github.com/figranium/figranium/releases/tag/v0.9.6"
   },
   {
     "id": 295430796,
