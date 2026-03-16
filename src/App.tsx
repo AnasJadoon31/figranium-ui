@@ -8,6 +8,7 @@ import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import { ThemeProvider, createTheme, CssBaseline } from "@mui/material";
 import LandingPage from "./LandingPage";
 import Releases from "./Releases";
+import Integrations from "./Integrations";
 
 function ScrollToTop() {
   const { pathname } = useLocation();
@@ -41,6 +42,7 @@ export default function App() {
         <Routes>
           <Route path="/" element={<LandingPage />} />
           <Route path="/releases" element={<Releases />} />
+          <Route path="/integrations" element={<Integrations />} />
         </Routes>
       </BrowserRouter>
     </ThemeProvider>

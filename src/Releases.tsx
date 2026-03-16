@@ -57,11 +57,11 @@ export default function Releases() {
       <div className="relative z-10">
         <LandingNavbar />
         <div className="max-w-4xl mx-auto px-6 pt-8 pb-16 sm:pt-12 sm:pb-24">
-          <header className="mb-8 lg:mb-10">
+          <header className="mb-12 lg:mb-16 text-center">
             <h1 className="text-4xl sm:text-5xl font-extrabold tracking-tight text-white mb-4">
               Releases
             </h1>
-            <p className="text-lg text-neutral-400">
+            <p className="text-lg text-neutral-400 max-w-2xl mx-auto">
               Latest updates, features, and fixes for the project.
             </p>
           </header>

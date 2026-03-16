@@ -41,11 +41,11 @@ export function LandingNavbar() {
 
       <div className="hidden md:flex items-center gap-8 text-xs font-medium text-zinc-400">
         {navLinks.map((link) => {
-          if (link === "RELEASES") {
+          if (link === "RELEASES" || link === "INTEGRATIONS") {
             return (
               <Link
                 key={link}
-                to="/releases"
+                to={`/${link.toLowerCase()}`}
                 className="hover:text-white transition-colors"
               >
                 {link}
